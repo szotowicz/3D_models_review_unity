@@ -4,7 +4,7 @@ public class FlyCamera : MonoBehaviour
 {
     private readonly float mainSpeed = 0.5f;
     private readonly float camSensitive = 0.25f;
-    private Vector3 lastMouse = new Vector3(255.0f, 255.0f, 155.0f);
+    private Vector3 lastMouse = new Vector3(255.0f, 255.0f, 255.0f);
 
     void Update()
     {
