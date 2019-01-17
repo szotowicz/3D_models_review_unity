@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
     public GameObject Model1;
     public GameObject Model2;
     public GameObject Model3;
+    public Animator AnimatorModel1;
+    public Animator AnimatorModel2;
+    public Animator AnimatorModel3;
+    public Slider AnimationSpeedSlider;
 
     private GameObject SelectedObject;
 
@@ -12,7 +17,7 @@ public class UI : MonoBehaviour
     {
         if (Model1 != null)
         {
-            HideModel();
+            HideCurrentModel();
             ShowModel(Model1);
         }
     }
@@ -21,7 +26,7 @@ public class UI : MonoBehaviour
     {
         if (Model2 != null)
         {
-            HideModel();
+            HideCurrentModel();
             ShowModel(Model2);
         }
     }
@@ -30,7 +35,7 @@ public class UI : MonoBehaviour
     {
         if (Model3 != null)
         {
-            HideModel();
+            HideCurrentModel();
             ShowModel(Model3);
         }
     }
@@ -40,19 +45,26 @@ public class UI : MonoBehaviour
         Application.Quit();
     }
 
-    public void RunAnimation1()
+    public void RunAnimation0()
     {
-        if (SelectedObject != null)
-        {
-            Debug.Log("Animation1");
-        }
+        RunAnimation(0);
     }
 
-    private void HideModel()
+    public void RunAnimation1()
+    {
+        RunAnimation(1);
+    }
+
+    public void RunAnimation2()
+    {
+        RunAnimation(2);
+    }
+
+    private void HideCurrentModel()
     {
         if (SelectedObject != null)
         {
-            Destroy(SelectedObject);
+            SelectedObject.SetActive(false);
         }
     }
 
@@ -60,7 +72,30 @@ public class UI : MonoBehaviour
     {
         if (modelToShow != null)
         {
-            SelectedObject = Instantiate(modelToShow, new Vector3(0.0f, 0.0f, 0.0f), Quaternion.identity);
+            SelectedObject = modelToShow;
+            SelectedObject.SetActive(true);
+        }
+    }
+
+    public void RunAnimation(int animation)
+    {
+        if (SelectedObject != null)
+        {
+            if (SelectedObject == Model1 && AnimatorModel1.isActiveAndEnabled)
+            {
+                AnimatorModel1.SetInteger("value", animation);
+                AnimatorModel1.speed = AnimationSpeedSlider.value;
+            }
+            else if (SelectedObject == Model2 && AnimatorModel2.isActiveAndEnabled)
+            {
+                AnimatorModel2.SetInteger("value", animation);
+                AnimatorModel2.speed = AnimationSpeedSlider.value;
+            }
+            else if (SelectedObject == Model3 && AnimatorModel3.isActiveAndEnabled)
+            {
+                AnimatorModel3.SetInteger("value", animation);
+                AnimatorModel3.speed = AnimationSpeedSlider.value;
+            }
         }
     }
 }
